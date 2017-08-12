@@ -1,20 +1,22 @@
+%define		subver	2016-12-22
+%define		ver		%(echo %{subver} | tr -d -)
 %define		plugin	gallery
-%define		php_min_version 5.0.0
+%define		php_min_version 5.1.0
 %include	/usr/lib/rpm/macros.php
 Summary:	DokuWiki Plugin to embed an automatically created image gallery into a page
 Name:		dokuwiki-plugin-%{plugin}
-Version:	20100430
+Version:	%{ver}
 Release:	1
 License:	GPL v2
 Group:		Applications/WWW
-Source0:	http://github.com/splitbrain/dokuwiki-plugin-%{plugin}/tarball/master/%{plugin}-%{version}.tgz
-# Source0-md5:	d368c8dff315fc1f7bde4d065279d224
-URL:		http://www.dokuwiki.org/plugin:gallery
+Source0:	https://github.com/splitbrain/dokuwiki-plugin-gallery/archive/%{subver}/%{plugin}-%{version}.tar.gz
+# Source0-md5:	2222b10270d5be1fddf1aa68b6f5183c
+URL:		https://www.dokuwiki.org/plugin:gallery
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.520
-Requires:	dokuwiki >= 20091225
-Requires:	php-common >= 4:%{php_min_version}
-Requires:	php-pcre
+Requires:	dokuwiki >= 20131208
+Requires:	php(core) >= %{php_min_version}
+Requires:	php(pcre)
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -32,6 +34,7 @@ A basic gallery can be added by selecting a namespace like this:
 %setup -qc
 mv *-%{plugin}-*/* .
 
+%build
 version=$(awk '/^date/{print $2}' plugin.info.txt)
 if [ "$(echo "$version" | tr -d -)" != %{version} ]; then
 	: %%{version} mismatch
@@ -43,6 +46,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{plugindir}
 cp -a . $RPM_BUILD_ROOT%{plugindir}
 %{__rm} $RPM_BUILD_ROOT%{plugindir}/README
+%{__rm} $RPM_BUILD_ROOT%{plugindir}/deleted.files
 
 %find_lang %{name}.lang
 
@@ -59,9 +63,10 @@ fi
 %defattr(644,root,root,755)
 %doc README
 %dir %{plugindir}
-%{plugindir}/*.css
 %{plugindir}/*.js
+%{plugindir}/*.less
 %{plugindir}/*.php
 %{plugindir}/*.txt
 %{plugindir}/conf
 %{plugindir}/images
+%{plugindir}/swipebox
