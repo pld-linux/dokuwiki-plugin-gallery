@@ -2,7 +2,6 @@
 %define		ver		%(echo %{subver} | tr -d -)
 %define		plugin	gallery
 %define		php_min_version 5.1.0
-%include	/usr/lib/rpm/macros.php
 Summary:	DokuWiki Plugin to embed an automatically created image gallery into a page
 Name:		dokuwiki-plugin-%{plugin}
 Version:	%{ver}
