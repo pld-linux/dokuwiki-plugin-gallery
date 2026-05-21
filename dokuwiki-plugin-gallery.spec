@@ -1,15 +1,15 @@
-%define		subver	2016-12-22
+%define		subver	2024-04-30
 %define		ver		%(echo %{subver} | tr -d -)
 %define		plugin	gallery
 %define		php_min_version 5.1.0
 Summary:	DokuWiki Plugin to embed an automatically created image gallery into a page
 Name:		dokuwiki-plugin-%{plugin}
 Version:	%{ver}
-Release:	2
+Release:	1
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	https://github.com/splitbrain/dokuwiki-plugin-gallery/archive/%{subver}/%{plugin}-%{version}.tar.gz
-# Source0-md5:	2222b10270d5be1fddf1aa68b6f5183c
+# Source0-md5:	fae2bf9229fe1b1fc38121be772d7b7f
 URL:		https://www.dokuwiki.org/plugin:gallery
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.520
@@ -22,7 +22,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		dokuconf	/etc/webapps/dokuwiki
 %define		dokudir		/usr/share/dokuwiki
 %define		plugindir	%{dokudir}/lib/plugins/%{plugin}
-%define		find_lang 	%{_usrlibrpm}/dokuwiki-find-lang.sh %{buildroot}
+%define		find_lang 	%{_rpmconfigdir}/dokuwiki-find-lang.sh %{buildroot}
 
 %description
 A basic gallery can be added by selecting a namespace like this:
@@ -66,6 +66,9 @@ fi
 %{plugindir}/*.less
 %{plugindir}/*.php
 %{plugindir}/*.txt
+%{plugindir}/action
+%{plugindir}/classes
 %{plugindir}/conf
-%{plugindir}/images
-%{plugindir}/swipebox
+%{plugindir}/script
+%{plugindir}/simple-lightbox
+%{plugindir}/syntax
